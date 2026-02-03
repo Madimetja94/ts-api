@@ -1,15 +1,6 @@
-import express, { Request, Response } from 'express';
-
-const app = express();
+import app from "./app";
 const PORT = 3000;
 
-//Middlewares
-app.use(express.json());
-
-app.get('/',(req : Request, res : Response) => {
-    res.send('Hello World!')
-});
-
 app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
+    console.log(`Server running at http://localhost:${PORT}`);
 });

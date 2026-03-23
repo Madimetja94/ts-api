@@ -4,9 +4,13 @@ import { UserService } from "../services/user.service";
 const userService = new UserService();
 
 export class UserController {
-  static getAllUsers(res: Response) {
-    const users = userService.getAllUsers();
-    res.status(200).json(users);
+  static getAllUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = userService.getAllUsers();
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
   }
 
   static getUserById(req: Request, res: Response, next: NextFunction) {
@@ -14,16 +18,16 @@ export class UserController {
       const user = userService.getUserByID(Number(req.params.id));
       res.status(200).json(user);
     } catch (error) {
-      next();
+      next(error);
     }
   }
 
   static createUser(req: Request, res: Response, next: NextFunction) {
-    try{
-        const {name, email} = req.body;
-        const user = userService.createUser(name, email);
-        res.status(201).json(user);
-    }catch(error){
+    try {
+      const { name, email } = req.body;
+      const user = userService.createUser(name, email);
+      res.status(201).json(user);
+    } catch (error) {
       next(error);
     }
   }
